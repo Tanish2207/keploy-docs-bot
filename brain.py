@@ -60,6 +60,9 @@ def get_vector_db():
 
 
 def answer_query(query, k=3):
+    from dotenv import load_dotenv
+    import os
+    load_dotenv()
     from langchain_core.prompts import ChatPromptTemplate
     from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -99,7 +102,7 @@ def answer_query(query, k=3):
     prompt = prompt_template.format(context=context_text, query=query)
 
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-pro-exp-03-25", google_api_key="AIzaSyCOlWrUFesPTYEhXoN03n3476tvKi_ctIA"
+        model="gemini-2.5-pro-exp-03-25", google_api_key=os.getenv("GEMINI_API_KEY")
     )
     response = llm.invoke(prompt)
     answer = response.content
